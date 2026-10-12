@@ -224,6 +224,7 @@ input[type=range] { width: 100%; accent-color: var(--save); }
 .target label { font-weight: 600; font-size: 13.5px; }
 .target select { padding: 6px 8px; font-size: 14px; }
 .top-line { font-size: 13px; color: var(--ink); }
+.occfacts .fine-note { font-size: 12px; color: var(--muted); line-height: 1.4; margin-top: 2px; }
 .verdict { font: 600 11.5px/1 var(--body); letter-spacing: .03em; padding: 5px 8px; border-radius: 999px; white-space: nowrap; flex: none; }
 .verdict.yes { background: var(--save-soft); color: var(--save); }
 .verdict.no { background: var(--cost-soft); color: var(--cost); }
@@ -414,9 +415,11 @@ details.notes[open] summary { margin-bottom: 6px; }
         <li>Your employees are split across occupations using your industry's own NKY staffing pattern (Lightcast, 6-digit NAICS rolled up). Industries with under 100 NKY jobs are blended with their broad sector's pattern.</li>
         <li>Turnover is stabilized before it drives hiring. Lightcast's figure counts every separation, so it is reduced to the voluntary share using BLS <a href="https://www.bls.gov/news.release/jolts.t04.htm" target="_blank" rel="noopener">JOLTS</a> quits and separations rates by sector (August 2026; layoffs don't create the hires counted here). Small industries are blended toward their sector's rate, since one or two establishments can swing a small industry's year. Each occupation then uses its NKY turnover, scaled so the total matches. Temporary and seasonal hires you enter are set aside.</li>
         <li>Net output lost per day a job is open is pay with benefits times your industry's NKY output per $1 of pay, minus the pay you don't spend while the job is open. Output per $1 of pay is kept between 1.1 and 3, and very small industries use their sector's figure.</li>
-        <li>Lost time is valued at what you pay for it, pay plus benefits. Each early exit or discharge costs recruiting, training time, half-speed ramp-up, and the days the job sits open again. For a typical NKY occupation that comes to about 30% of pay, in line with published estimates of 21% to 33%; occupations with long training cost more.</li>
+        <li>Two different pay figures appear here, and they are not the same thing. Pay for each job comes from Lightcast's NKY <em>median wage</em> for that occupation, which is what you put in a job offer. The industry's "average total pay" in Step 1 is every job in that industry averaged together and includes benefits, so it runs much higher; for NKY manufacturing it is about $101,000 against a $57,000 weighted median wage across the same jobs. The model prices your costs from the job-level wage, never the industry average.</li>
+        <li>On top of salary the model adds 18.5% for insurance, retirement and payroll taxes (<a href="https://www.bls.gov/news.release/ecec.t04.htm" target="_blank" rel="noopener">BLS</a>). Paid leave and bonuses are left out because a salary figure already covers them. This matches Northern Kentucky: Lightcast earnings per job run about 1.21 times <a href="https://www.bls.gov/cew/" target="_blank" rel="noopener">QCEW</a> wages across the region's sectors.</li>
+        <li>Lost time is valued at what you pay for it, salary plus those employer costs. Each early exit or discharge costs recruiting, training time, half-speed ramp-up, and the days the job sits open again. For a typical NKY occupation that comes to about 30% of pay, in line with published estimates of 21% to 33%; occupations with long training cost more.</li>
         <li>Weeks to full productivity come from each occupation's typical on-the-job training and education: 2 weeks with no training needed, 4 for short-term, 12 for moderate-term, and 26 for long-term or apprenticeship. Degree jobs get 8 to 12 weeks.</li>
-        <li>Recruiting cost per hire: <a href="https://www.shrm.org/in/about/press-room/shrm-releases-2025-benchmarking-reports--how-does-your-organizat" target="_blank" rel="noopener">SHRM</a>. Trainer cost: BLS median training specialist wage of $33.31 (<a href="https://www.bls.gov/ooh/business-and-financial/training-and-development-specialists.htm" target="_blank" rel="noopener">BLS</a>) plus benefits at 30% of compensation (<a href="https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm" target="_blank" rel="noopener">BLS</a>). Intern conversion of 63%: <a href="https://naceweb.org/talent-acquisition/internships/internship-program-retention-rates-underscore-long-term-roi" target="_blank" rel="noopener">NACE</a>.</li>
+        <li>Recruiting cost per hire: <a href="https://www.shrm.org/in/about/press-room/shrm-releases-2025-benchmarking-reports--how-does-your-organizat" target="_blank" rel="noopener">SHRM</a>. Trainer cost: BLS median training specialist wage of $33.31 (<a href="https://www.bls.gov/ooh/business-and-financial/training-and-development-specialists.htm" target="_blank" rel="noopener">BLS</a>) plus employer costs above salary (<a href="https://www.bls.gov/news.release/ecec.t04.htm" target="_blank" rel="noopener">BLS</a>). Intern conversion of 63%: <a href="https://naceweb.org/talent-acquisition/internships/internship-program-retention-rates-underscore-long-term-roi" target="_blank" rel="noopener">NACE</a>.</li>
       </ul>
       <h3>Limits to keep in mind</h3>
       <ul>
@@ -453,9 +456,9 @@ details.notes[open] summary { margin-bottom: 6px; }
   const AVG_TURNOVER = 0.657; // all NKY occupations, Lightcast 2025
   const DEFAULT_ASSUMPTIONS = {
     // what things cost
-    benefitShare: 0.30,   // BLS ECEC, benefits share of compensation (national)
+    benefitShare: 0.185,  // employer cost above salary: BLS ECEC insurance 7.9% + retirement 3.3% + legally required 7.2% of total compensation. Paid leave and bonuses are excluded because a salary figure already includes them. Checked against NKY: Lightcast earnings per job run 1.21x QCEW wages across sectors.
     recruit: 5475,        // SHRM cost per hire (national)
-    trainerRate: 47.59,   // BLS training specialist median $33.31 + benefits (national)
+    trainerRate: 40.87,   // BLS training specialist median $33.31 plus employer costs above salary
     trainCost: 3000,      // trainer time per new hire (assumption)
     // how often
     hardShare: 0.20,      // share of hires that are hard-to-fill openings
@@ -860,7 +863,7 @@ const FINE = [
     ["recruit", "Recruiting cost per hire", "usd", "nat"],
     ["trainCost", "Training cost per new hire", "usd", "asm"],
     ["ratio", "NKY output per $1 of pay in your industry", "x", "nky", "Lightcast GRP per job ÷ earnings per job"],
-    ["benefitShare", "Benefits share of compensation", "pct", "nat"],
+    ["benefitShare", "Employer cost above salary, share of total", "pct", "nat", "Insurance, retirement and payroll taxes. Paid leave and bonuses are already in salary."],
   ]],
   ["Strategy reach and effects", [
     ["programGrads", "People the partner program graduates a year", "n", "asm", "Educator data will replace this"],
@@ -1035,7 +1038,8 @@ function render() {
   const perEmp = totW0 ? r.today / totW0 : 0;
   $("lead").innerHTML = `Open jobs, early quits, bad hires and skill gaps cost you about <b>${short(r.today)} a year</b>, about <b>${short(perEmp)} per employee</b>. Three commitments sized to your company would return <b>$${r.roi.toFixed(2)} for every $1</b> over three years.`;
   $("indfacts").innerHTML = `<div><b>${ind.whole ? "All of " + ind.name : ind.name}</b></div>
-    <div>${ind.jobs.toLocaleString("en-US")} NKY jobs${ind.estab ? ` · ${Math.round(ind.estab)} establishments` : ""}${ind.earn ? ` · ${fmt(ind.earn)} average earnings` : ""}</div>
+    <div>${ind.jobs.toLocaleString("en-US")} NKY jobs${ind.estab ? ` · ${Math.round(ind.estab)} establishments` : ""}${ind.earn ? ` · ${fmt(ind.earn)} average total pay` : ""}</div>
+    <div class="fine-note">Average total pay is every job in the industry averaged together, including benefits, so it sits well above a typical wage. Your own pay by job is in Step 2.</div>
     <div>Turnover: ${pct(ind.rawTurn)} in NKY data; we use <b>${pct(ind.turn)}</b>, the part that leads to replacement hiring${ind.jobs < 100 ? ` · <span class="chip low">Small in NKY</span>` : ""}</div>`;
   const pb = pattern();
   $("emp-hint").textContent = `Split across jobs using the NKY mix for ${pb.basis}. Adjust it in Step 2 if yours differs.`;
