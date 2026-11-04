@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Hiring and Skill Gap Calculator | BE NKY Growth Partnership</title>
-<meta name="description" content="See what open jobs, early quits, bad hires and skill gaps cost a Northern Kentucky company each year, and what three employer commitments would save over three years. Prepared by BE NKY Growth Partnership.">
+<meta name="description" content="See what open jobs, early quits, bad hires and skill gaps cost a Northern Kentucky company each year, and what three strategies would save over three years. Prepared by BE NKY Growth Partnership.">
 <meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -224,6 +224,61 @@ input[type=range] { width: 100%; accent-color: var(--save); }
 .target label { font-weight: 600; font-size: 13.5px; }
 .target select { padding: 6px 8px; font-size: 14px; }
 .top-line { font-size: 13px; color: var(--ink); }
+.printhead { display: none; }
+@media print {
+  /* always print the light palette, and keep the fills */
+  :root, :root[data-theme="dark"] {
+    --bg: #fff; --surface: #fff; --sunk: #F1F4F9; --ink: #10203A; --muted: #4A566B; --faint: #7B879B;
+    --line: #C9D2E0; --rule: #10203A; --save: #2A5490; --save-soft: #E7EEF8; --cost: #9A3B46; --cost-soft: #F6E8EB;
+    --today: #AEB6C6; --warn-bg: #FBEEE0; --warn-ink: #7A3600; --input-bg: #fff; --input-line: #C9D2E0;
+    --step1: #10203A; --step2: #9A3B46; --step3: #2A5490; color-scheme: light;
+  }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  @page { size: letter portrait; margin: 0.55in 0.5in; }
+  html, body { background: #fff; font-size: 10.5pt; }
+  .brandbar { border-bottom: 2px solid var(--rule); padding: 0 0 8pt; }
+  .brandbar .in { min-height: 0; }
+  .brandbar .logo img { height: 30pt; }
+  .mast, .inputs, .example, .jump, #copy, #pdf, #case, #wf-open, #wf-dlg, .seg, .foot .logo,
+  .wfbar, details.more > summary, .counts { display: none !important; }
+  details.notes > summary { display: block !important; margin-bottom: 4pt; }
+  details.notes > summary .hint { display: none; }
+  details.notes > summary::after { content: none !important; }
+  .wrap { display: block; max-width: none; padding: 0; }
+  .results { display: block; }
+  .printhead { display: block; margin: 10pt 0 12pt; }
+  .printhead h1 { font: 700 19pt/1.15 var(--display); margin: 0 0 6pt; color: var(--ink); letter-spacing: -.01em; }
+  .printhead .meta { font-size: 9.5pt; color: var(--muted); margin: 0 0 8pt; }
+  .printhead dl { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 3pt 18pt; margin: 0;
+                  border: 1px solid var(--line); border-radius: 4pt; padding: 8pt 10pt; background: var(--sunk); font-size: 9.5pt; }
+  .printhead dl > div { display: flex; justify-content: space-between; gap: 10pt; }
+  .printhead dt { color: var(--muted); } .printhead dd { margin: 0; font-weight: 600; color: var(--ink); }
+  .lead { font-size: 11.5pt; }
+  .head { margin-bottom: 6pt; } .head h2 { font-size: 13pt; }
+  section, .panel, details.notes { border: 0 !important; box-shadow: none !important; padding: 0 !important;
+    margin: 0 0 12pt !important; background: transparent !important; border-radius: 0 !important; }
+  .panel.s2, .panel.s3, .panel.out, details.notes { border-top: 2pt solid var(--step3) !important; padding-top: 8pt !important; }
+  .panel.s2 { border-top-color: var(--step2) !important; }
+  h2 { font-size: 13pt; } h3 { font-size: 11pt; }
+  .kpis { grid-template-columns: repeat(4, 1fr); gap: 6pt; }
+  .kpi { padding: 7pt 8pt; border: 1px solid var(--line); break-inside: avoid; }
+  .kpi b { font-size: 15pt; } .kpi .l, .kpi .s { font-size: 8.5pt; }
+  .kpi.hero { background: var(--sunk) !important; border-color: var(--step3) !important; }
+  .kpi.hero .l, .kpi.hero .s { color: var(--muted) !important; } .kpi.hero b { color: var(--ink) !important; }
+  .costs { gap: 7pt; } .cost { border: 1px solid var(--line); padding: 8pt; break-inside: avoid; }
+  .cost .amt { font-size: 13pt; } .cost .math { background: var(--sunk); font-size: 9pt; }
+  .strat { border: 1px solid var(--line); padding: 9pt; gap: 10pt; break-inside: avoid; margin-bottom: 8pt; }
+  .stats b { font-size: 11pt; } .stats div { background: var(--sunk); }
+  details.more, details.more[open] { display: block; } details.more p { margin-top: 0 !important; }
+  .brow { break-inside: avoid; } .years svg { height: 150pt; }
+  details.notes { break-before: page; }
+  .panel.out, .panel.years { break-inside: avoid; }
+  .notes { font-size: 8.3pt; line-height: 1.34; } .notes li { margin: 1.5pt 0; } .notes ul { padding-left: 13pt; }
+  .notes h2 { display: block; } .notes h3 { margin: 7pt 0 2pt; }
+  .foot { border-top: 1px solid var(--line); padding: 6pt 0 0; margin-top: 8pt; font-size: 8pt; break-inside: avoid; break-before: avoid; }
+  a { color: var(--ink); text-decoration: none; }
+  .tip { display: none !important; }
+}
 .occfacts .fine-note { font-size: 12px; color: var(--muted); line-height: 1.4; margin-top: 2px; }
 .verdict { font: 600 11.5px/1 var(--body); letter-spacing: .03em; padding: 5px 8px; border-radius: 999px; white-space: nowrap; flex: none; }
 .verdict.yes { background: var(--save-soft); color: var(--save); }
@@ -287,7 +342,7 @@ details.notes[open] summary { margin-bottom: 6px; }
     <div>
       <p class="eyebrow">Northern Kentucky</p>
       <h1>What hiring and skill gaps cost your company</h1>
-      <p class="lede">Answer a few questions about your company to see what open jobs, early quits, bad hires and skill gaps cost you each year, and what three commitments would save over three years.</p>
+      <p class="lede">Answer a few questions about your company to see what open jobs, early quits, bad hires and skill gaps cost you each year, and what three strategies would save over three years.</p>
     </div>
     <aside class="counts" aria-label="The four costs this calculator counts">
       <h2>Four costs, added up across your jobs</h2>
@@ -361,13 +416,15 @@ details.notes[open] summary { margin-bottom: 6px; }
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
           <div class="seg" id="case" role="group" aria-label="Which case to show"><button type="button" data-c="expected">Expected</button><button type="button" data-c="conservative">Conservative</button></div>
           <button class="btn" type="button" id="copy">Copy summary</button>
+          <button class="btn" type="button" id="pdf">Save as PDF</button>
         </div>
       </div>
+      <div class="printhead" id="printhead" aria-hidden="true"></div>
       <p class="lead" id="lead"></p>
       <p class="hint" id="case-hint" style="margin:-6px 0 14px"></p>
       <div class="kpis">
         <div class="kpi"><div class="l">These gaps cost you</div><b id="k-today"></b><div class="s">per year today</div></div>
-        <div class="kpi"><div class="l">Commitments save you</div><b id="k-save"></b><div class="s" id="k-save-s"></div></div>
+        <div class="kpi"><div class="l">Strategies save you</div><b id="k-save"></b><div class="s" id="k-save-s"></div></div>
         <div class="kpi"><div class="l">Net after program costs</div><b id="k-net"></b><div class="s" id="k-net-s"></div></div>
         <div class="kpi hero"><div class="l">Back for every $1 spent</div><b id="k-roi"></b><div class="s" id="k-roi-s"></div></div>
       </div>
@@ -386,16 +443,16 @@ details.notes[open] summary { margin-bottom: 6px; }
     </section>
 
     <section class="panel s3">
-      <p class="eyebrow step"><i>3</i>What three commitments would save</p>
-      <h2>Three commitments, sized to your company</h2>
+      <p class="eyebrow step"><i>3</i>What three strategies would save</p>
+      <h2>Three strategies, sized to your company</h2>
       <p class="sub">Sized by simple rules: one hour of school engagement a year per employee, 2,000 paid internship hours per 40 employees, and 100 training hours for each worker below full proficiency. Each card shows what it would cost you and save.</p>
       <div class="strats" id="strats"></div>
     </section>
 
     <section class="panel out">
       <p class="eyebrow">Before and after</p>
-      <h2>Your four costs, today and with the three commitments</h2>
-      <div class="legend" style="margin-top:8px"><span><i style="background:var(--today)"></i>Today</span><span><i style="background:var(--save)"></i>With the commitments, by year three</span></div>
+      <h2>Your four costs, today and with the three strategies</h2>
+      <div class="legend" style="margin-top:8px"><span><i style="background:var(--today)"></i>Today</span><span><i style="background:var(--save)"></i>With the strategies, by year three</span></div>
       <div class="bars" id="bars"></div>
       <p class="sub" id="recruit-line" style="margin:14px 0 0"></p>
     </section>
@@ -428,7 +485,7 @@ details.notes[open] summary { margin-bottom: 6px; }
         <li>Later years are discounted at 5% a year, and training gains fade 20% a year (Almeida and Carneiro found 17% to 25%).</li>
         <li>Upskilling gains follow the published rate: 10 hours of training per worker a year raises productivity about 0.6% (<a href="https://discovery-pp.ucl.ac.uk/14681/1/14681.pdf" target="_blank" rel="noopener">Almeida and Carneiro</a>, Portuguese manufacturers), tapering as a worker's gap closes. A higher estimate exists: trained workers are 23% more productive in <a href="https://econpapers.repec.org/paper/izaizadps/dp4731.htm" target="_blank" rel="noopener">Konings and Vanormelingen</a>, so this is the conservative choice.</li>
         <li>Strategy effects are assumptions anchored to published retention gaps: graduates of a program your trainer committed time to are assumed to have half the career-fit exits of other hires and ramp up a third faster; intern hires 60% fewer (<a href="https://naceweb.org/talent-acquisition/internships/internship-program-retention-rates-underscore-long-term-roi" target="_blank" rel="noopener">NACE</a> finds more than three-quarters stay a year versus under half of other hires) and ramp up in half the time. The shape of each diminishing-returns curve is also an assumption. The NKY employer survey will replace these with local figures.</li>
-        <li>The three commitments are sized by rule: one school hour per employee a year, 2,000 internship hours per 40 employees, and 100 training hours per worker below proficiency. School engagement and internships go to the three jobs you hire most for; training covers every job.</li>
+        <li>The three strategies are sized by rule: one school hour per employee a year, 2,000 internship hours per 40 employees, and 100 training hours per worker below proficiency. School engagement and internships go to the three jobs you hire most for; training covers every job.</li>
         <li>Posting duration understates time to fill, because postings come down before a hire and jobs get reposted. You can raise it under Fine-tune.</li>
         <li>Occupations marked "Limited NKY data" have under 250 NKY jobs or under 50 postings, so their defaults are less reliable.</li>
         <li>The model runs year by year. Pipeline hires are assumed to separate at half the rate of other hires, so each year fewer jobs reopen and fewer replacements are needed. That is why savings grow over time. Upskilling gains are assumed to hold for the years shown.</li>
@@ -1036,7 +1093,19 @@ function render() {
   $("case-hint").textContent = S.case === "expected" ? "Expected case: effects from published research and the state training grant counted. Switch to Conservative to halve every effect and count no grant." : "Conservative case: every program effect halved and no state grant counted. Switch to Expected for the research-based estimate.";
   const other = (() => { const keep = S.case; S.case = keep === "expected" ? "conservative" : "expected"; const o2 = evaluateAll(); S.case = keep; return o2; })();
   const perEmp = totW0 ? r.today / totW0 : 0;
-  $("lead").innerHTML = `Open jobs, early quits, bad hires and skill gaps cost you about <b>${short(r.today)} a year</b>, about <b>${short(perEmp)} per employee</b>. Three commitments sized to your company would return <b>$${r.roi.toFixed(2)} for every $1</b> over three years.`;
+  const onNames = STRATS.filter(s => S.strat[s.id].on).map(s => s.title).join("; ") || "none";
+  $("printhead").innerHTML = `<h1>What hiring and skill gaps cost your company</h1>
+    <p class="meta">Prepared with the BE NKY Growth Partnership employer calculator on ${new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})}. Figures cover jobs located in Boone, Kenton and Campbell counties.</p>
+    <dl>
+      <div><dt>Industry</dt><dd>${ind.whole ? "All of " + ind.name : ind.name}</dd></div>
+      <div><dt>Employees</dt><dd>${totW0.toLocaleString("en-US")}</dd></div>
+      <div><dt>Hires last year</dt><dd>${nP(r.hires)}${S.temps ? ` (plus ${nP(S.temps)} temporary)` : ""}</dd></div>
+      <div><dt>Left within six months</dt><dd>${S.earlyQuits != null ? nP(S.earlyQuits) : nP(r.nd.early)}</dd></div>
+      <div><dt>Days to fill a job</dt><dd>${S.daysFill != null ? Math.round(S.daysFill) : Math.round(r.nd.days)}</dd></div>
+      <div><dt>Case shown</dt><dd>${S.case === "expected" ? "Expected" : "Conservative"}</dd></div>
+      <div style="grid-column:1/-1"><dt>Strategies included</dt><dd style="text-align:right">${onNames}</dd></div>
+    </dl>`;
+  $("lead").innerHTML = `Open jobs, early quits, bad hires and skill gaps cost you about <b>${short(r.today)} a year</b>, about <b>${short(perEmp)} per employee</b>. Three strategies sized to your company would return <b>$${r.roi.toFixed(2)} for every $1</b> over three years.`;
   $("indfacts").innerHTML = `<div><b>${ind.whole ? "All of " + ind.name : ind.name}</b></div>
     <div>${ind.jobs.toLocaleString("en-US")} NKY jobs${ind.estab ? ` · ${Math.round(ind.estab)} establishments` : ""}${ind.earn ? ` · ${fmt(ind.earn)} average total pay` : ""}</div>
     <div class="fine-note">Average total pay is every job in the industry averaged together, including benefits, so it sits well above a typical wage. Your own pay by job is in Step 2.</div>
@@ -1107,9 +1176,9 @@ function render() {
     const label = rows.length === S.rows.length ? "all jobs" : rows.map(i => OCC[S.rows[i].soc].name).join(", ");
     $("reach-" + s.id).innerHTML = `Reaches <b>${label}</b>: ${rWorkers} of your ${totW} employees, about ${nP(rHires)} hires a year, ${pct(shareCost)} of your cost.`;
     $("cm-" + s.id).innerHTML =
-      s.id === "trainer" ? `Your commitment: <b>${Math.round(st.v * 10).toLocaleString("en-US")} hours a year</b> of a trainer's time at a local school, one hour per employee, about ${nP(st.v)} school days.` :
-      s.id === "intern" ? `Your commitment: <b>${Math.round(st.v).toLocaleString("en-US")} paid internship hours a year</b>, about ${nP(st.v / A.internHours)} ${A.internHours}-hour internships.` :
-      `Your commitment: <b>${st.v} training hours</b> for each of the ${Math.round(p ? p.workers : 0)} workers below full proficiency, a one-time program.`;
+      s.id === "trainer" ? `What you'd do: <b>${Math.round(st.v * 10).toLocaleString("en-US")} hours a year</b> of a trainer's time at a local school, one hour per employee, about ${nP(st.v)} school days.` :
+      s.id === "intern" ? `What you'd do: <b>${Math.round(st.v).toLocaleString("en-US")} paid internship hours a year</b>, about ${nP(st.v / A.internHours)} ${A.internHours}-hour internships.` :
+      `What you'd do: <b>${st.v} training hours</b> for each of the ${Math.round(p ? p.workers : 0)} workers below full proficiency, a one-time program.`;
     const vd = $("vd-" + s.id);
     if (p) { vd.textContent = p.roi >= 1 ? "Pays for itself" : "Doesn't pay at this size"; vd.className = "verdict " + (p.roi >= 1 ? "yes" : "no"); } else { vd.textContent = ""; vd.className = "verdict"; }
     if (p) {
@@ -1161,6 +1230,22 @@ $("employees").addEventListener("input", e => { const v = parseFloat(e.target.va
 for (const [id, key, min] of [["hiresLast", "hiresLast", 0], ["earlyQuits", "earlyQuits", 0], ["daysFill", "daysFill", 1], ["temps", "temps", 0]]) $(id).addEventListener("input", e => {
   const v = parseFloat(e.target.value); if (!isFinite(v) || v < min) return; S[key] = v; markEdited(); render(); });
 $("case").addEventListener("click", e => { const c = e.target.dataset.c; if (c) { S.case = c; render(); } });
+// Save as PDF: open every collapsed section, then hand off to the browser's print dialog
+let reopened = [];
+function expandForPrint() {
+  reopened = [...document.querySelectorAll("details:not([open])")];
+  reopened.forEach(d => d.open = true);
+}
+function restoreAfterPrint() { reopened.forEach(d => d.open = false); reopened = []; }
+window.addEventListener("beforeprint", expandForPrint);
+window.addEventListener("afterprint", restoreAfterPrint);
+$("pdf").addEventListener("click", () => {
+  expandForPrint();
+  const done = () => { restoreAfterPrint(); window.removeEventListener("afterprint", done); };
+  window.addEventListener("afterprint", done);
+  try { window.print(); } catch (e) { restoreAfterPrint(); }
+  setTimeout(() => { if (reopened.length) restoreAfterPrint(); }, 1500);
+});
 $("copy").addEventListener("click", async () => {
   const r = evaluateAll(), ind = industry(), on = STRATS.filter(s => S.strat[s.id].on);
   const lines = [`What hiring and skill gaps cost a ${ind.whole ? ind.name : ind.name} company with ${Math.round(S.employees)} employees in Northern Kentucky (${S.case} case)`, "",
